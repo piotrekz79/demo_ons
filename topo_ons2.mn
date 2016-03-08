@@ -1,0 +1,272 @@
+{
+    "application": {
+        "dpctl": "",
+        "ipBase": "10.0.0.0/8",
+        "netflow": {
+            "nflowAddId": "0",
+            "nflowTarget": "",
+            "nflowTimeout": "600"
+        },
+        "openFlowVersions": {
+            "ovsOf10": "1",
+            "ovsOf11": "1",
+            "ovsOf12": "1",
+            "ovsOf13": "1"
+        },
+        "sflow": {
+            "sflowHeader": "128",
+            "sflowPolling": "30",
+            "sflowSampling": "400",
+            "sflowTarget": ""
+        },
+        "startCLI": "0",
+        "switchType": "ovs",
+        "terminalType": "xterm"
+    },
+    "controllers": [
+        {
+            "opts": {
+                "controllerProtocol": "tcp",
+                "controllerType": "ref",
+                "hostname": "c0",
+                "remoteIP": "127.0.0.1",
+                "remotePort": 6633
+            },
+            "x": "127.0",
+            "y": "65.0"
+        }
+    ],
+    "hosts": [
+        {
+            "number": "2",
+            "opts": {
+                "hostname": "h_2He",
+                "nodeNum": 2,
+                "sched": "host",
+                "vlanInterfaces": [
+                    [
+                        "10.0.2.1",
+                        "20"
+                    ]
+                ]
+            },
+            "x": "792.0",
+            "y": "253.0"
+        },
+        {
+            "number": "3",
+            "opts": {
+                "hostname": "h_7N",
+                "nodeNum": 3,
+                "sched": "host",
+                "vlanInterfaces": [
+                    [
+                        "10.0.7.1",
+                        "70"
+                    ]
+                ]
+            },
+            "x": "686.0",
+            "y": "443.0"
+        },
+        {
+            "number": "1",
+            "opts": {
+                "hostname": "h_5B",
+                "nodeNum": 1,
+                "sched": "host",
+                "vlanInterfaces": [
+                    [
+                        "10.0.5.1",
+                        "50"
+                    ]
+                ]
+            },
+            "x": "606.0",
+            "y": "106.0"
+        },
+        {
+            "number": "4",
+            "opts": {
+                "hostname": "h_3Li",
+                "nodeNum": 4,
+                "sched": "host",
+                "vlanInterfaces": [
+                    [
+                        "10.0.3.1",
+                        "30"
+                    ]
+                ]
+            },
+            "x": "400.0",
+            "y": "368.0"
+        }
+    ],
+    "links": [
+        {
+            "dest": "s_128T",
+            "opts": {},
+            "src": "s_96T"
+        },
+        {
+            "dest": "s_64T",
+            "opts": {},
+            "src": "s_128T"
+        },
+        {
+            "dest": "s_96T",
+            "opts": {},
+            "src": "s_32T"
+        },
+        {
+            "dest": "s_64T",
+            "opts": {},
+            "src": "s_32T"
+        },
+        {
+            "dest": "s_128T",
+            "opts": {},
+            "src": "s_32T"
+        },
+        {
+            "dest": "h_3Li",
+            "opts": {},
+            "src": "s_128T"
+        },
+        {
+            "dest": "s_00T",
+            "opts": {},
+            "src": "s_96T"
+        },
+        {
+            "dest": "s_01T",
+            "opts": {},
+            "src": "s_00T"
+        },
+        {
+            "dest": "s_64T",
+            "opts": {},
+            "src": "s_01T"
+        },
+        {
+            "dest": "h_7N",
+            "opts": {},
+            "src": "s_01T"
+        },
+        {
+            "dest": "h_2He",
+            "opts": {},
+            "src": "s_64T"
+        },
+        {
+            "dest": "h_5B",
+            "opts": {},
+            "src": "s_32T"
+        }
+    ],
+    "switches": [
+        {
+            "number": "5",
+            "opts": {
+                "controllers": [
+                    "c0"
+                ],
+                "dpid": "0001",
+                "hostname": "s_00T",
+                "netflow": "0",
+                "nodeNum": 5,
+                "sflow": "0",
+                "switchIP": "",
+                "switchType": "default"
+            },
+            "x": "291.0",
+            "y": "445.0"
+        },
+        {
+            "number": "4",
+            "opts": {
+                "controllers": [
+                    "c0"
+                ],
+                "dpid": "0004",
+                "hostname": "s_64T",
+                "netflow": "0",
+                "nodeNum": 4,
+                "sflow": "0",
+                "switchIP": "",
+                "switchType": "default"
+            },
+            "x": "620.0",
+            "y": "256.0"
+        },
+        {
+            "number": "1",
+            "opts": {
+                "controllers": [
+                    "c0"
+                ],
+                "dpid": "0003",
+                "hostname": "s_32T",
+                "netflow": "0",
+                "nodeNum": 1,
+                "sflow": "0",
+                "switchIP": "",
+                "switchType": "default"
+            },
+            "x": "413.0",
+            "y": "111.0"
+        },
+        {
+            "number": "3",
+            "opts": {
+                "controllers": [
+                    "c0"
+                ],
+                "dpid": "0006",
+                "hostname": "s_128T",
+                "netflow": "0",
+                "nodeNum": 3,
+                "sflow": "0",
+                "switchIP": "",
+                "switchType": "default"
+            },
+            "x": "406.0",
+            "y": "260.0"
+        },
+        {
+            "number": "6",
+            "opts": {
+                "controllers": [
+                    "c0"
+                ],
+                "dpid": "0002",
+                "hostname": "s_01T",
+                "netflow": "0",
+                "nodeNum": 6,
+                "sflow": "0",
+                "switchIP": "",
+                "switchType": "default"
+            },
+            "x": "518.0",
+            "y": "443.0"
+        },
+        {
+            "number": "2",
+            "opts": {
+                "controllers": [
+                    "c0"
+                ],
+                "dpid": "0005",
+                "hostname": "s_96T",
+                "netflow": "0",
+                "nodeNum": 2,
+                "sflow": "0",
+                "switchIP": "",
+                "switchType": "default"
+            },
+            "x": "185.0",
+            "y": "258.0"
+        }
+    ],
+    "version": "2"
+}
