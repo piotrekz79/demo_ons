@@ -277,7 +277,7 @@ def databaseDump(net):
 
 	############## site2vpn
 	cursor.execute('DROP TABLE IF EXISTS `site2vpn`;')
-	sql = """CREATE TABLE `site2vpn` (	  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,	  `vpnid` int(10) unsigned DEFAULT NULL,	  `siteid` int(10) unsigned DEFAULT NULL,	  PRIMARY KEY (`id`),	  KEY `site_idx` (`siteid`),	  KEY `vpn_idx` (`vpnid`),	  CONSTRAINT `site` FOREIGN KEY (`siteid`) REFERENCES `sites` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,	  CONSTRAINT `vpn` FOREIGN KEY (`vpnid`) REFERENCES `vpns` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION	) ENGINE=InnoDB DEFAULT CHARSET=latin1;"""
+	sql = """CREATE TABLE `site2vpn` (	  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,	  `vpnid` int(10) unsigned DEFAULT NULL,	  `siteid` int(10) unsigned DEFAULT NULL,	  PRIMARY KEY (`id`),	  KEY `site_idx` (`siteid`),	  KEY `vpn_idx` (`vpnid`),	  CONSTRAINT `site` FOREIGN KEY (`siteid`) REFERENCES `sites` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,	  CONSTRAINT `vpn` FOREIGN KEY (`vpnid`) REFERENCES `vpns` (`id`) ON DELETE CASCADE ON UPDATE CASCADE	) ENGINE=InnoDB DEFAULT CHARSET=latin1;"""
 	cursor.execute(sql)
 
 
