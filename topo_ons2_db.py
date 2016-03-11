@@ -186,9 +186,15 @@ def returnNodeConnections(nodes, switches):
 				hosttable.append(int(swNamePort[1].split('eth')[1]))
 			else:
 				sys.exit('host has too many links')
-		subint = intf.name.split('eth')[1].split('.') # split 0.1001 into 0 and 1001
-		hosttable.append(int(subint[0]))
-		hosttable.append(int(subint[1]))
+		#no vlans
+		#subint = intf.name.split('eth')[1].split('.') # split 0.1001 into 0 and 1001
+		#hosttable.append(int(subint[0]))
+		#hosttable.append(int(subint[1]))
+		locint = intf.name.split('eth')[1]
+		hosttable.append(int(locint))
+		hosttable.append(0) #fake vlan 0
+
+
 		hostnet = IPNetwork(intf.IP() + '/' + intf.prefixLen)
 		hosttable.append(str(hostnet.cidr))
 		hosttable.append(intf.MAC())
@@ -338,9 +344,21 @@ def databaseDump(net):
 			# Rollback in case there is any error
 			db.rollback()
 
+	############ sitelinks
+	cursor.execute('DROP TABLE IF EXISTS `ases`;')
+	sql = """CREATE TABLE `ases` (  `id` int(10) unsigned NOT NULL,  `bgp_ip` varchar(45) DEFAULT NULL,  `as_num` int(11) DEFAULT NULL,  `as_name` varchar(45) DEFAULT NULL,  PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;"""
+	cursor.execute(sql)
 
 
 
+
+
+	#################`ext_links`
+
+
+	cursor.execute('DROP TABLE IF EXISTS `ext_links`;')
+	sql = """CREATE TABLE `ext_links` (  `id` int(11) NOT NULL,  `switch` int(11) DEFAULT NULL,  `as` int(10) unsigned DEFAULT NULL,  PRIMARY KEY (`id`),  KEY `switch_idx` (`switch`),  KEY `as_idx` (`as`),  CONSTRAINT `as_fk` FOREIGN KEY (`as`) REFERENCES `ases` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,  CONSTRAINT `switch_fk` FOREIGN KEY (`switch`) REFERENCES `switches` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION) ENGINE=InnoDB DEFAULT CHARSET=latin1;"""
+	cursor.execute(sql)
 
 
 
@@ -418,6 +436,7 @@ if __name__ == '__main__':
 	#databaseDump(net)
 	CLI(net)
 	net.stop()
+
 # get sshd args from the command line or use default args
 # useDNS=no -u0 to avoid reverse DNS lookup timeout
 # argvopts = ' '.join( sys.argv[ 1: ] ) if len( sys.argv ) > 1 else (
