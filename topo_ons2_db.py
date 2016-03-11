@@ -84,21 +84,22 @@ def myNetwork():
 	                       port=6653)
 
 	info('*** Add switches\n')
-	s100 = net.addSwitch('s100', cls=OVSKernelSwitch, dpid='0064',datapath='user')
-	s64 = net.addSwitch('s64', cls=OVSKernelSwitch, dpid='0040',datapath='user')
-	s32 = net.addSwitch('s32', cls=OVSKernelSwitch, dpid='0020',datapath='user')
-	s128 = net.addSwitch('s128', cls=OVSKernelSwitch, dpid='0080',datapath='user')
-	s1 = net.addSwitch('s1', cls=OVSKernelSwitch, dpid='0001',datapath='user')
-	s96 = net.addSwitch('s96', cls=OVSKernelSwitch, dpid='0060',datapath='user')
+	#for vlan/mpls ,datapath='user'
+	s100 = net.addSwitch('s100', cls=OVSKernelSwitch, dpid='0064')
+	s64 = net.addSwitch('s64', cls=OVSKernelSwitch, dpid='0040')
+	s32 = net.addSwitch('s32', cls=OVSKernelSwitch, dpid='0020')
+	s128 = net.addSwitch('s128', cls=OVSKernelSwitch, dpid='0080')
+	s1 = net.addSwitch('s1', cls=OVSKernelSwitch, dpid='0001')
+	s96 = net.addSwitch('s96', cls=OVSKernelSwitch, dpid='0060')
 
 	# s1 = net.addSwitch('s1', cls=UserSwitch)
 
 	info('*** Add hosts\n')
 
-	h2He = net.addHost('h2He', cls=Host, ip='10.0.0.2/24', defaultRoute=None)
-	h7N = net.addHost('h7N', cls=Host, ip='10.0.0.7/24', defaultRoute=None)
-	h5B = net.addHost('h5B', cls=Host, ip='10.0.0.5/24', defaultRoute=None)
-	h3Li = net.addHost('h3Li', cls=Host, ip='10.0.0.3/24', defaultRoute=None)
+	h2He = net.addHost('h2He', cls=Host, ip='10.0.2.1/24', defaultRoute=None)
+	h7N = net.addHost('h7N', cls=Host, ip='10.0.7.1/24', defaultRoute=None)
+	h5B = net.addHost('h5B', cls=Host, ip='10.0.5.1/24', defaultRoute=None)
+	h3Li = net.addHost('h3Li', cls=Host, ip='10.0.3.1/24', defaultRoute=None)
 
 	info('*** Add links\n')
 	net.addLink(s96, s128)
@@ -378,15 +379,18 @@ def postconfig(net):
 		else:
 			sys.exit('host ID can be 99 at most')
 
-		net.get(hostname).cmd('vconfig add %s-eth0 %d' % (hostname, vlan))
-		net.get(hostname).cmd('ifconfig %s-eth0.%d up' % (hostname, vlan))
-		net.get(hostname).cmd('ifconfig %s-eth0.%d 10.0.%d.1 netmask 255.255.255.0' % (hostname, vlan, hostID))
-		net.get(hostname).cmd('ifconfig %s-eth0.%d hw ether %s' % (hostname, vlan, hostMAC))
-		intf = net.get(hostname).defaultIntf()
-		newName = '%s.%d' % (intf, vlan)
-		intf.name = newName
-		net.get(hostname).nameToIntf[newName] = intf
-		net.get(hostname).setIP('10.0.%d.1/24' % (hostID))
+		#VLANS temporary removed
+		#net.get(hostname).cmd('vconfig add %s-eth0 %d' % (hostname, vlan))
+		#net.get(hostname).cmd('ifconfig %s-eth0.%d up' % (hostname, vlan))
+		#net.get(hostname).cmd('ifconfig %s-eth0.%d 10.0.%d.1 netmask 255.255.255.0' % (hostname, vlan, hostID))
+		#net.get(hostname).cmd('ifconfig %s-eth0.%d hw ether %s' % (hostname, vlan, hostMAC))
+		#intf = net.get(hostname).defaultIntf()
+		#newName = '%s.%d' % (intf, vlan)
+		#intf.name = newName
+		#net.get(hostname).nameToIntf[newName] = intf
+		#net.get(hostname).setIP('10.0.%d.1/24' % (hostID))
+
+		net.get(hostname).cmd('ifconfig %s-eth0 hw ether %s' % (hostname, hostMAC))
 		net.get(hostname).setMAC(hostMAC)
 		net.get(hostname).cmd('route add default gw 10.0.%d.254' % (hostID))
 		net.get(hostname).cmd('arp -s 10.0.%d.254 00:00:00:00:00:FE' % (hostID))
